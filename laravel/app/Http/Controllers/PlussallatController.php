@@ -15,7 +15,8 @@ class PlussallatController extends Controller
      */
     public function index()
     {
-        //
+        $plussallats = Plussallat::all();
+        return response()->json($plussallats);
     }
 
     /**
@@ -36,7 +37,10 @@ class PlussallatController extends Controller
      */
     public function store(StorePlussallatRequest $request)
     {
-        //
+        $plussallat = new Plussallat();
+        $plussallat->fill($request->all());
+        $plussallat->save();
+        return response()->json($plussallat, 201);
     }
 
     /**
@@ -45,9 +49,10 @@ class PlussallatController extends Controller
      * @param  \App\Models\Plussallat  $plussallat
      * @return \Illuminate\Http\Response
      */
-    public function show(Plussallat $plussallat)
+    public function show(Plussallat $plussallat, int $id)
     {
-        //
+        $plussallat = Plussallat::findOrFail($id);
+        return response()->json($plussallat);
     }
 
     /**
@@ -68,9 +73,12 @@ class PlussallatController extends Controller
      * @param  \App\Models\Plussallat  $plussallat
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePlussallatRequest $request, Plussallat $plussallat)
+    public function update(UpdatePlussallatRequest $request, Plussallat $plussallat, int $id)
     {
-        //
+        $plussallat = Plussallat::findOrFail($id);
+        $plussallat->fill($request->all());
+        $plussallat->save();
+        return response()->json($plussallat, 200);
     }
 
     /**
@@ -79,8 +87,9 @@ class PlussallatController extends Controller
      * @param  \App\Models\Plussallat  $plussallat
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Plussallat $plussallat)
+    public function destroy(Plussallat $plussallat, int $id)
     {
-        //
+        $plussallat = Plussallat::destroy($id);
+        return response()->noContent();
     }
 }
